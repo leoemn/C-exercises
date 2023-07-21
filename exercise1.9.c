@@ -1,69 +1,43 @@
-/*Write a C program that simulates a simple calculator. It should take two numbers and 
-  an operator (+, -, *, /) as input and perform the corresponding operation.*/
+/*Write a C program that calculates the average, maximum, and minimum of a given array of numbers.*/
 #include <stdio.h>
-#include <stdbool.h>
-
-// Function prototypes
-char operator;
-bool isoperator(char operator);
 
 int main(void)
 {
-    float a, b;
-    
-    // Input the first number
-    printf("Enter first number:");
-    scanf("%f", &a);
-    
-    // Input the second number
-    printf("Enter second number");
-    scanf("%f", &b);
-    
-    do
-    {
-        // Input the operator and validate it
-        printf("Enter an operator(+, -, *, /)");
-        scanf(" %c", &operator); // Note the space before %c to consume any whitespace characters left in the buffer
-        
-    } while (!isoperator(operator)); // Loop until a valid operator is entered
+    int a[] = {4, 56, 6, 10, 11, 25, 0, -5, -25};
+    int length = sizeof(a) / sizeof(a[0]);
+    int minimum, maximum, sum = 0;
+    float average;
 
-    // Perform the operation based on the operator
-    switch (operator)
+    // Loop through the array to find the minimum, maximum, and calculate the sum
+    for (int i = 0; i < length; i++)
     {
-    case '+':
-        printf("%f + %f = %f", a, b, a + b);
-        break;
-    case '-':
-        printf("%f - %f = %f", a, b, a - b);
-        break;
-    case '*':
-        printf("%f * %f = %f", a, b, a * b);
-        break;
-    case '/':
-        if (b == 0)
+        // If it's the first element, initialize both minimum and maximum with its value
+        if (i == 0)
         {
-            printf("Cannot divide by zero!");
+            minimum = a[i];
+            maximum = a[i];
+            continue; // Move to the next iteration to avoid re-checking the conditions below
         }
-        else
-        {
-            printf("%f / %f = %f", a, b, a / b);
-        }
-        break;
-    
-    default:
-        printf("Most probably a BUG!");
-        break;
-    }
-    
-    return 0;
-}
 
-// Function to check if the given character is a valid operator (+, -, *, /)
-bool isoperator(char operator)
-{
-    if (operator == '+' || operator == '-' || operator == '*' || operator == '/')
-    {
-        return true;
+        // Check if the current element is less than the current minimum and update the minimum if needed
+        if (a[i] < minimum)
+        {
+            minimum = a[i];
+        }
+
+        // Check if the current element is greater than the current maximum and update the maximum if needed
+        if (a[i] > maximum)
+        {
+            maximum = a[i];
+        }
+
+        // Calculate the sum of all elements in the array
+        sum = a[i] + sum;
     }
-    return false;
+
+    // Calculate the average of all elements using the sum and the length of the array
+    average = (float)sum / length;
+
+    // Output the minimum, maximum, and average values
+    printf("minimum = %d, maximum = %d, average = %f", minimum, maximum, average);
 }
